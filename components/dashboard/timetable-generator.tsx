@@ -1,0 +1,163 @@
+"use client"
+
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Zap, Loader2 } from "lucide-react"
+import { useState } from "react"
+import { generateTimetable } from "@/lib/timetable-generator"
+import { Progress } from "@/components/ui/progress"
+
+interface Course {
+  course_code: string
+  course_name: string
+  lecture_hours: number
+  lab_hours: number
+}
+
+interface CourseSection {
+  id: string
+  section_name: string
+  max_students: number
+  faculty_id: string | null
+  courses: Course | null
+}
+
+interface Room {
+  id: string
+  room_number: string
+  building: string
+  capacity: number
+  room_type: string | null
+}
+
+interface TimeSlot {
+  id: string
+  start_time: string
+  end_time: string
+  duration_minutes: number
+}
+
+export function TimetableGenerator({
+  courseSections,
+  rooms,
+  timeSlots,
+  onComplete,
+}: {
+  courseSections: CourseSection[]
+  rooms: Room[]
+  timeSlots: TimeSlot[]
+  onComplete?: () => void
+}) {
+  const [open, setOpen] = useState(false)
+  const [isGenerating, setIsGenerating] = useState(false)
+  const [progress, setProgress] = useState(0)
+  const [status, setStatus] = useState("")
+  const [error, setError] = useState<string | null>(null)
+
+  const handleGenerate = async () => {
+    setIsGenerating(true)
+    setProgress(0)
+    setStatus("Initializing...")
+    setError(null)
+
+    try {
+      setStatus("Analyzing constraints...")
+      setProgress(20)
+
+      const result = await generateTimetable({
+        courseSections,
+        rooms,
+        timeSlots,
+        onProgress: (percent, message) => {
+          setProgress(percent)
+          setStatus(message)
+        },
+      })
+
+      if (result.success) {
+        setProgress(100)
+        setStatus("Timetable generated successfully!")
+        setTimeout(() => {
+          setOpen(false)
+          onComplete?.()
+        }, 1500)
+      } else {
+        setError(result.error || "Failed to generate timetable")
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred")
+    } finally {
+      setIsGenerating(false)
+    }
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button size="lg">
+          <Zap className="mr-2 h-4 w-4" />
+          Generate Timetable
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Generate Timetable</DialogTitle>
+          <DialogDescription>Automatically create a conflict-free schedule for all course sections</DialogDescription>
+        </DialogHeader>
+
+        <div className="space-y-4 py-4">
+          <div className="space-y-2">
+            <div className="text-sm font-medium">Statistics</div>
+            <div className="grid grid-cols-3 gap-4 text-sm">
+              <div>
+                <div className="text-muted-foreground">Sections</div>
+                <div className="text-lg font-semibold">{courseSections.length}</div>
+              </div>
+              <div>
+                <div className="text-muted-foreground">Rooms</div>
+                <div className="text-lg font-semibold">{rooms.length}</div>
+              </div>
+              <div>
+                <div className="text-muted-foreground">Time Slots</div>
+                <div className="text-lg font-semibold">{timeSlots.length}</div>
+              </div>
+            </div>
+          </div>
+
+          {isGenerating && (
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-muted-foreground">{status}</span>
+                <span className="font-medium">{progress}%</span>
+              </div>
+              <Progress value={progress} />
+            </div>
+          )}
+
+          {error && <p className="text-sm text-destructive">{error}</p>}
+        </div>
+
+        <DialogFooter>
+          <Button onClick={handleGenerate} disabled={isGenerating}>
+            {isGenerating ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Generating...
+              </>
+            ) : (
+              "Start Generation"
+            )}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}
