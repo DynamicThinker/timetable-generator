@@ -1,53 +1,67 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { createClient } from "@/lib/supabase/client"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
-import { Calendar } from "lucide-react"
+import { createClient } from "@/lib/supabase/client";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Calendar } from "lucide-react";
 
 export default function SignUpPage() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [fullName, setFullName] = useState("")
-  const [role, setRole] = useState<"student" | "faculty" | "admin">("student")
-  const [error, setError] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [role, setRole] = useState<"student" | "faculty" | "admin">("student");
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault()
-    const supabase = createClient()
-    setIsLoading(true)
-    setError(null)
+    e.preventDefault();
+    const supabase = createClient();
+    setIsLoading(true);
+    setError(null);
 
     try {
       const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          emailRedirectTo: process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || `${window.location.origin}/dashboard`,
+          emailRedirectTo:
+            process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL ||
+            `${window.location.origin}/dashboard`,
           data: {
             full_name: fullName,
             role: role,
           },
         },
-      })
-      if (error) throw error
-      router.push("/auth/verify-email")
+      });
+      if (error) throw error;
+      router.push("/auth/verify-email");
     } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "An error occurred")
+      setError(error instanceof Error ? error.message : "An error occurred");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center p-6 relative overflow-hidden">
@@ -67,7 +81,9 @@ export default function SignUpPage() {
             <CardTitle className="text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
               Create account
             </CardTitle>
-            <CardDescription className="text-muted-foreground">Enter your information to get started</CardDescription>
+            <CardDescription className="text-muted-foreground">
+              Enter your information to get started
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSignUp}>
@@ -117,7 +133,12 @@ export default function SignUpPage() {
                   <Label htmlFor="role" className="text-foreground/90">
                     Role
                   </Label>
-                  <Select value={role} onValueChange={(value: any) => setRole(value)}>
+                  <Select
+                    value={role}
+                    onValueChange={(value: "student" | "faculty" | "admin") =>
+                      setRole(value)
+                    }
+                  >
                     <SelectTrigger className="glass-button border-white/20 focus:border-primary/50 focus:ring-primary/30 h-11">
                       <SelectValue placeholder="Select your role" />
                     </SelectTrigger>
@@ -143,7 +164,10 @@ export default function SignUpPage() {
               </div>
               <div className="mt-6 text-center text-sm text-muted-foreground">
                 Already have an account?{" "}
-                <Link href="/auth/login" className="text-primary font-medium hover:text-primary/80 transition-colors">
+                <Link
+                  href="/auth/login"
+                  className="text-primary font-medium hover:text-primary/80 transition-colors"
+                >
                   Sign in
                 </Link>
               </div>
@@ -152,5 +176,5 @@ export default function SignUpPage() {
         </Card>
       </div>
     </div>
-  )
+  );
 }
