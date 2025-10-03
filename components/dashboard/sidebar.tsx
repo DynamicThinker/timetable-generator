@@ -1,61 +1,159 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
-import { Calendar, Building2, Users, BookOpen, Clock, LayoutDashboard, Settings, GraduationCap } from "lucide-react"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import {
+  Calendar,
+  Building2,
+  Users,
+  BookOpen,
+  Clock,
+  LayoutDashboard,
+  Settings,
+  GraduationCap,
+  Sparkles,
+  Zap,
+  School,
+  UserCheck,
+  Clock3,
+  Building,
+  BookMarked,
+  CalendarDays,
+  Cog,
+} from "lucide-react";
 
 interface SidebarProps {
-  userRole: "admin" | "faculty" | "student"
+  userRole: "admin" | "faculty" | "student";
 }
 
 export function DashboardSidebar({ userRole }: SidebarProps) {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   const adminLinks = [
-    { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
-    { href: "/dashboard/departments", label: "Departments", icon: Building2 },
-    { href: "/dashboard/courses", label: "Courses", icon: BookOpen },
-    { href: "/dashboard/faculty", label: "Faculty", icon: Users },
-    { href: "/dashboard/rooms", label: "Rooms", icon: Building2 },
-    { href: "/dashboard/time-slots", label: "Time Slots", icon: Clock },
-    { href: "/dashboard/timetable", label: "Timetable", icon: Calendar },
-    { href: "/dashboard/settings", label: "Settings", icon: Settings },
-  ]
+    {
+      href: "/dashboard",
+      label: "Overview",
+      icon: LayoutDashboard,
+      color: "text-blue-500",
+    },
+    {
+      href: "/dashboard/departments",
+      label: "Departments",
+      icon: School,
+      color: "text-green-500",
+    },
+    {
+      href: "/dashboard/courses",
+      label: "Courses",
+      icon: BookMarked,
+      color: "text-purple-500",
+    },
+    {
+      href: "/dashboard/faculty",
+      label: "Faculty",
+      icon: UserCheck,
+      color: "text-pink-500",
+    },
+    {
+      href: "/dashboard/rooms",
+      label: "Rooms",
+      icon: Building,
+      color: "text-indigo-500",
+    },
+    {
+      href: "/dashboard/time-slots",
+      label: "Time Slots",
+      icon: Clock3,
+      color: "text-cyan-500",
+    },
+    {
+      href: "/dashboard/timetable",
+      label: "Timetable",
+      icon: CalendarDays,
+      color: "text-orange-500",
+    },
+    {
+      href: "/dashboard/settings",
+      label: "Settings",
+      icon: Cog,
+      color: "text-gray-500",
+    },
+  ];
 
   const facultyLinks = [
-    { href: "/dashboard", label: "My Schedule", icon: Calendar },
-    { href: "/dashboard/courses", label: "My Courses", icon: BookOpen },
-    { href: "/dashboard/constraints", label: "Preferences", icon: Settings },
-  ]
+    {
+      href: "/dashboard",
+      label: "My Schedule",
+      icon: CalendarDays,
+      color: "text-orange-500",
+    },
+    {
+      href: "/dashboard/courses",
+      label: "My Courses",
+      icon: BookMarked,
+      color: "text-purple-500",
+    },
+    {
+      href: "/dashboard/constraints",
+      label: "Preferences",
+      icon: Cog,
+      color: "text-gray-500",
+    },
+  ];
 
   const studentLinks = [
-    { href: "/dashboard", label: "My Schedule", icon: Calendar },
-    { href: "/dashboard/courses", label: "My Courses", icon: BookOpen },
-    { href: "/dashboard/enrollments", label: "Enrollments", icon: GraduationCap },
-  ]
+    {
+      href: "/dashboard",
+      label: "My Schedule",
+      icon: CalendarDays,
+      color: "text-orange-500",
+    },
+    {
+      href: "/dashboard/courses",
+      label: "My Courses",
+      icon: BookMarked,
+      color: "text-purple-500",
+    },
+    {
+      href: "/dashboard/enrollments",
+      label: "Enrollments",
+      icon: GraduationCap,
+      color: "text-green-500",
+    },
+  ];
 
-  const links = userRole === "admin" ? adminLinks : userRole === "faculty" ? facultyLinks : studentLinks
+  const links =
+    userRole === "admin"
+      ? adminLinks
+      : userRole === "faculty"
+      ? facultyLinks
+      : studentLinks;
 
   return (
     <aside className="hidden w-64 lg:block relative">
       <div className="fixed top-0 left-0 h-full w-64 glass border-r border-white/10">
         <div className="flex h-full flex-col">
           <div className="flex h-16 items-center border-b border-white/10 px-6 backdrop-blur-xl">
-            <Link href="/dashboard" className="flex items-center gap-2 group">
-              <div className="p-2 rounded-xl bg-primary/20 backdrop-blur-sm border border-primary/30 group-hover:bg-primary/30 transition-all duration-300">
-                <Calendar className="h-5 w-5 text-primary" />
+            <Link href="/dashboard" className="flex items-center gap-3 group">
+              <div className="p-2 rounded-xl bg-primary/20 backdrop-blur-sm border border-primary/30 group-hover:bg-primary/30 transition-all duration-300 shadow-[0_0_24px_rgba(255,165,0,0.15)] group-hover:shadow-[0_0_32px_rgba(255,165,0,0.25)]">
+                <Sparkles className="h-5 w-5 text-primary group-hover:rotate-12 transition-transform duration-300" />
               </div>
-              <span className="text-lg font-semibold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                TimeTable
-              </span>
+              <div className="flex flex-col">
+                <span className="text-lg font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(255,255,255,0.08)]">
+                  TimeTable
+                </span>
+                <span className="text-xs text-muted-foreground font-medium">
+                  Generator Pro
+                </span>
+              </div>
             </Link>
           </div>
 
           <nav className="flex-1 space-y-1 p-4">
             {links.map((link) => {
-              const Icon = link.icon
-              const isActive = pathname === link.href
+              const Icon = link.icon;
+              const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.href}
@@ -64,16 +162,23 @@ export function DashboardSidebar({ userRole }: SidebarProps) {
                     "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-300 group relative overflow-hidden",
                     isActive
                       ? "bg-primary/20 text-primary backdrop-blur-xl border border-primary/30 shadow-lg shadow-primary/20"
-                      : "text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-white/5 backdrop-blur-sm border border-transparent hover:border-white/10",
+                      : "text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-white/5 backdrop-blur-sm border border-transparent hover:border-white/10"
                   )}
                 >
-                  {isActive && <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent" />}
+                  {isActive && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent" />
+                  )}
                   <Icon
-                    className={cn("h-4 w-4 relative z-10", isActive && "drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]")}
+                    className={cn(
+                      "h-4 w-4 relative z-10 transition-all duration-300",
+                      isActive
+                        ? "drop-shadow-[0_0_8px_rgba(255,165,0,0.5)] scale-110"
+                        : link.color || "text-muted-foreground"
+                    )}
                   />
                   <span className="relative z-10">{link.label}</span>
                 </Link>
-              )
+              );
             })}
           </nav>
 
@@ -81,5 +186,5 @@ export function DashboardSidebar({ userRole }: SidebarProps) {
         </div>
       </div>
     </aside>
-  )
+  );
 }

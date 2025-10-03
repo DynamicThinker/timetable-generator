@@ -10,7 +10,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Zap, Loader2 } from "lucide-react";
+import {
+  Zap,
+  Loader2,
+  Sparkles,
+  Wand2,
+  Clock,
+  CheckCircle,
+  BookMarked,
+  Building,
+} from "lucide-react";
 import { useState } from "react";
 import { generateTimetable } from "@/lib/timetable-generator";
 import type { CourseSection, Room, TimeSlot } from "@/lib/types";
@@ -75,17 +84,21 @@ export function TimetableGenerator({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="lg">
-          <Zap className="mr-2 h-4 w-4" />
+        <Button size="lg" className="glass-button group">
+          <Wand2 className="mr-2 h-4 w-4 group-hover:rotate-12 transition-transform duration-300" />
           Generate Timetable
+          <Sparkles className="ml-2 h-4 w-4 group-hover:scale-110 transition-transform duration-300" />
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Generate Timetable</DialogTitle>
+          <DialogTitle className="flex items-center gap-2">
+            <Wand2 className="h-5 w-5 text-primary" />
+            Generate Timetable
+          </DialogTitle>
           <DialogDescription>
             Automatically create a conflict-free schedule for all course
-            sections
+            sections using advanced algorithms
           </DialogDescription>
         </DialogHeader>
 
@@ -93,19 +106,32 @@ export function TimetableGenerator({
           <div className="space-y-2">
             <div className="text-sm font-medium">Statistics</div>
             <div className="grid grid-cols-3 gap-4 text-sm">
-              <div>
-                <div className="text-muted-foreground">Sections</div>
-                <div className="text-lg font-semibold">
+              <div className="glass-card p-3 rounded-lg">
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <BookMarked className="h-4 w-4" />
+                  Sections
+                </div>
+                <div className="text-lg font-semibold text-primary">
                   {courseSections.length}
                 </div>
               </div>
-              <div>
-                <div className="text-muted-foreground">Rooms</div>
-                <div className="text-lg font-semibold">{rooms.length}</div>
+              <div className="glass-card p-3 rounded-lg">
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Building className="h-4 w-4" />
+                  Rooms
+                </div>
+                <div className="text-lg font-semibold text-primary">
+                  {rooms.length}
+                </div>
               </div>
-              <div>
-                <div className="text-muted-foreground">Time Slots</div>
-                <div className="text-lg font-semibold">{timeSlots.length}</div>
+              <div className="glass-card p-3 rounded-lg">
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Clock className="h-4 w-4" />
+                  Time Slots
+                </div>
+                <div className="text-lg font-semibold text-primary">
+                  {timeSlots.length}
+                </div>
               </div>
             </div>
           </div>
@@ -124,14 +150,21 @@ export function TimetableGenerator({
         </div>
 
         <DialogFooter>
-          <Button onClick={handleGenerate} disabled={isGenerating}>
+          <Button
+            onClick={handleGenerate}
+            disabled={isGenerating}
+            className="glass-button"
+          >
             {isGenerating ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 Generating...
               </>
             ) : (
-              "Start Generation"
+              <>
+                <Wand2 className="mr-2 h-4 w-4" />
+                Start Generation
+              </>
             )}
           </Button>
         </DialogFooter>

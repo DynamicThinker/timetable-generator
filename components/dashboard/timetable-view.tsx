@@ -3,7 +3,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Clock, MapPin, User } from "lucide-react";
+import {
+  Clock,
+  MapPin,
+  User,
+  Calendar,
+  BookOpen,
+  GraduationCap,
+  Building2,
+  Users,
+} from "lucide-react";
 import type { TimetableEntry, TimeSlot } from "@/lib/types";
 
 const DAYS = [
@@ -38,11 +47,16 @@ export function TimetableView({
     return (
       <Card>
         <CardContent className="flex min-h-[400px] items-center justify-center">
-          <div className="text-center">
-            <p className="text-lg font-medium">No timetable generated yet</p>
-            <p className="text-sm text-muted-foreground">
-              Click &quot;Generate Timetable&quot; to create a schedule
-            </p>
+          <div className="text-center space-y-4">
+            <div className="p-4 rounded-full bg-primary/10 w-fit mx-auto">
+              <Calendar className="h-8 w-8 text-primary" />
+            </div>
+            <div>
+              <p className="text-lg font-medium">No timetable generated yet</p>
+              <p className="text-sm text-muted-foreground">
+                Click &quot;Generate Timetable&quot; to create a schedule
+              </p>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -67,9 +81,12 @@ export function TimetableView({
             {dayEntries.length === 0 ? (
               <Card>
                 <CardContent className="flex min-h-[200px] items-center justify-center">
-                  <p className="text-muted-foreground">
-                    No classes scheduled for {day}
-                  </p>
+                  <div className="text-center space-y-2">
+                    <BookOpen className="h-6 w-6 text-muted-foreground mx-auto" />
+                    <p className="text-muted-foreground">
+                      No classes scheduled for {day}
+                    </p>
+                  </div>
                 </CardContent>
               </Card>
             ) : (
@@ -97,7 +114,7 @@ export function TimetableView({
                     </CardHeader>
                     <CardContent className="space-y-2 text-sm">
                       <div className="flex items-center gap-2 text-muted-foreground">
-                        <Clock className="h-4 w-4" />
+                        <Clock className="h-4 w-4 text-blue-500" />
                         <span>
                           {entry.time_slots
                             ? `${formatTime(
@@ -107,7 +124,7 @@ export function TimetableView({
                         </span>
                       </div>
                       <div className="flex items-center gap-2 text-muted-foreground">
-                        <MapPin className="h-4 w-4" />
+                        <Building2 className="h-4 w-4 text-green-500" />
                         <span>
                           {entry.rooms
                             ? `${entry.rooms.room_number}, ${entry.rooms.building}`
@@ -115,7 +132,7 @@ export function TimetableView({
                         </span>
                       </div>
                       <div className="flex items-center gap-2 text-muted-foreground">
-                        <User className="h-4 w-4" />
+                        <Users className="h-4 w-4 text-purple-500" />
                         <span>
                           {entry.course_sections?.faculty?.profiles
                             ?.full_name || "Unassigned"}
