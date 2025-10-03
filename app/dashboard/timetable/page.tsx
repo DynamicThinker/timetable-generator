@@ -2,6 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import type {
+  Department,
+  Room,
+  TimeSlot,
+  Course,
+  Faculty,
+  CourseSection,
+  TimetableEntry,
+} from "@/lib/types";
 import { TimetableGenerator } from "@/components/dashboard/timetable-generator";
 import { TimetableView } from "@/components/dashboard/timetable-view";
 import { TimetableCalendarView } from "@/components/dashboard/timetable-calendar-view";
@@ -11,37 +20,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calendar, List } from "lucide-react";
 
 export default function TimetablePage() {
-  type Department = { id: string; name: string };
-  type Room = { id: string; room_number: string; building?: string | null };
-  type TimeSlot = { id: string; start_time: string; end_time: string };
-  type Course = {
-    course_code: string;
-    course_name: string;
-    lecture_hours?: number | null;
-    lab_hours?: number | null;
-    department_id: string;
-  };
-  type Faculty = {
-    employee_id: string;
-    profiles?: { full_name?: string | null } | null;
-  };
-  type CourseSection = {
-    id: string;
-    section_name?: string | null;
-    courses?: Course | null;
-    faculty?: Faculty | null;
-  };
-  type TimetableEntry = {
-    id: string;
-    course_sections?: {
-      section_name?: string | null;
-      courses?: Course | null;
-      faculty?: { profiles?: { full_name?: string | null } | null } | null;
-    } | null;
-    rooms?: Room | null;
-    time_slots?: TimeSlot | null;
-  };
-
   type FilterValue = "all" | string;
 
   const [courseSections, setCourseSections] = useState<CourseSection[]>([]);

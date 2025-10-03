@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,41 +9,14 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Zap, Loader2 } from "lucide-react"
-import { useState } from "react"
-import { generateTimetable } from "@/lib/timetable-generator"
-import { Progress } from "@/components/ui/progress"
+} from "@/components/ui/dialog";
+import { Zap, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { generateTimetable } from "@/lib/timetable-generator";
+import type { CourseSection, Room, TimeSlot } from "@/lib/types";
+import { Progress } from "@/components/ui/progress";
 
-interface Course {
-  course_code: string
-  course_name: string
-  lecture_hours: number
-  lab_hours: number
-}
-
-interface CourseSection {
-  id: string
-  section_name: string
-  max_students: number
-  faculty_id: string | null
-  courses: Course | null
-}
-
-interface Room {
-  id: string
-  room_number: string
-  building: string
-  capacity: number
-  room_type: string | null
-}
-
-interface TimeSlot {
-  id: string
-  start_time: string
-  end_time: string
-  duration_minutes: number
-}
+// Using shared types from lib/types
 
 export function TimetableGenerator({
   courseSections,
@@ -51,53 +24,53 @@ export function TimetableGenerator({
   timeSlots,
   onComplete,
 }: {
-  courseSections: CourseSection[]
-  rooms: Room[]
-  timeSlots: TimeSlot[]
-  onComplete?: () => void
+  courseSections: CourseSection[];
+  rooms: Room[];
+  timeSlots: TimeSlot[];
+  onComplete?: () => void;
 }) {
-  const [open, setOpen] = useState(false)
-  const [isGenerating, setIsGenerating] = useState(false)
-  const [progress, setProgress] = useState(0)
-  const [status, setStatus] = useState("")
-  const [error, setError] = useState<string | null>(null)
+  const [open, setOpen] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [status, setStatus] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   const handleGenerate = async () => {
-    setIsGenerating(true)
-    setProgress(0)
-    setStatus("Initializing...")
-    setError(null)
+    setIsGenerating(true);
+    setProgress(0);
+    setStatus("Initializing...");
+    setError(null);
 
     try {
-      setStatus("Analyzing constraints...")
-      setProgress(20)
+      setStatus("Analyzing constraints...");
+      setProgress(20);
 
       const result = await generateTimetable({
         courseSections,
         rooms,
         timeSlots,
         onProgress: (percent, message) => {
-          setProgress(percent)
-          setStatus(message)
+          setProgress(percent);
+          setStatus(message);
         },
-      })
+      });
 
       if (result.success) {
-        setProgress(100)
-        setStatus("Timetable generated successfully!")
+        setProgress(100);
+        setStatus("Timetable generated successfully!");
         setTimeout(() => {
-          setOpen(false)
-          onComplete?.()
-        }, 1500)
+          setOpen(false);
+          onComplete?.();
+        }, 1500);
       } else {
-        setError(result.error || "Failed to generate timetable")
+        setError(result.error || "Failed to generate timetable");
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred")
+      setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
-      setIsGenerating(false)
+      setIsGenerating(false);
     }
-  }
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -110,7 +83,10 @@ export function TimetableGenerator({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Generate Timetable</DialogTitle>
-          <DialogDescription>Automatically create a conflict-free schedule for all course sections</DialogDescription>
+          <DialogDescription>
+            Automatically create a conflict-free schedule for all course
+            sections
+          </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 py-4">
@@ -119,7 +95,9 @@ export function TimetableGenerator({
             <div className="grid grid-cols-3 gap-4 text-sm">
               <div>
                 <div className="text-muted-foreground">Sections</div>
-                <div className="text-lg font-semibold">{courseSections.length}</div>
+                <div className="text-lg font-semibold">
+                  {courseSections.length}
+                </div>
               </div>
               <div>
                 <div className="text-muted-foreground">Rooms</div>
@@ -159,5 +137,5 @@ export function TimetableGenerator({
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
