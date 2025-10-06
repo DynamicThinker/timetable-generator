@@ -1,30 +1,27 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
-import { X } from "lucide-react"
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { X } from "lucide-react";
+import type { Department, Room } from "@/lib/types";
 
-interface Department {
-  id: string
-  name: string
-  code: string
-}
-
-interface Room {
-  id: string
-  room_number: string
-  building: string
-}
+// Using shared Department and Room types
 
 interface TimetableFiltersProps {
-  departments: Department[]
-  rooms: Room[]
-  selectedDepartment: string
-  selectedRoom: string
-  onDepartmentChange: (value: string) => void
-  onRoomChange: (value: string) => void
-  onClearFilters: () => void
+  departments: Department[];
+  rooms: Room[];
+  selectedDepartment: string;
+  selectedRoom: string;
+  onDepartmentChange: (value: string) => void;
+  onRoomChange: (value: string) => void;
+  onClearFilters: () => void;
 }
 
 export function TimetableFilters({
@@ -36,7 +33,7 @@ export function TimetableFilters({
   onRoomChange,
   onClearFilters,
 }: TimetableFiltersProps) {
-  const hasFilters = selectedDepartment !== "all" || selectedRoom !== "all"
+  const hasFilters = selectedDepartment !== "all" || selectedRoom !== "all";
 
   return (
     <div className="flex flex-wrap items-end gap-4">
@@ -80,5 +77,5 @@ export function TimetableFilters({
         </Button>
       )}
     </div>
-  )
+  );
 }

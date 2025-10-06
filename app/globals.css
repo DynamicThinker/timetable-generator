@@ -3,65 +3,129 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Enhanced dark theme with glassmorphism design tokens */
+/* Light theme with orange color scheme */
+:root {
+  /* Light backgrounds with warm undertones */
+  --background: oklch(0.99 0.005 30);
+  --foreground: oklch(0.15 0.01 30);
+
+  /* Glass card with warm transparency */
+  --card: oklch(0.98 0.01 30 / 0.8);
+  --card-foreground: oklch(0.15 0.01 30);
+
+  /* Popover glass effect */
+  --popover: oklch(0.98 0.01 30 / 0.95);
+  --popover-foreground: oklch(0.15 0.01 30);
+
+  /* Vibrant orange as primary */
+  --primary: oklch(0.65 0.18 35);
+  --primary-foreground: oklch(0.98 0 0);
+
+  /* Warm secondary */
+  --secondary: oklch(0.95 0.02 30);
+  --secondary-foreground: oklch(0.15 0.01 30);
+
+  /* Muted warm surfaces */
+  --muted: oklch(0.96 0.01 30);
+  --muted-foreground: oklch(0.45 0.01 30);
+
+  /* Accent with orange-red tint */
+  --accent: oklch(0.6 0.15 25);
+  --accent-foreground: oklch(0.98 0 0);
+
+  /* Destructive red-orange */
+  --destructive: oklch(0.55 0.2 20);
+  --destructive-foreground: oklch(0.98 0 0);
+
+  /* Warm borders */
+  --border: oklch(0.9 0.01 30);
+  --input: oklch(0.95 0.01 30);
+  --ring: oklch(0.65 0.18 35 / 0.3);
+
+  /* Chart colors with warm palette */
+  --chart-1: oklch(0.65 0.18 35);
+  --chart-2: oklch(0.6 0.15 25);
+  --chart-3: oklch(0.7 0.2 45);
+  --chart-4: oklch(0.55 0.12 15);
+  --chart-5: oklch(0.75 0.15 50);
+
+  /* Sidebar warm glass effect */
+  --sidebar: oklch(0.97 0.01 30 / 0.8);
+  --sidebar-foreground: oklch(0.15 0.01 30);
+  --sidebar-primary: oklch(0.65 0.18 35);
+  --sidebar-primary-foreground: oklch(0.98 0 0);
+  --sidebar-accent: oklch(0.95 0.02 30);
+  --sidebar-accent-foreground: oklch(0.15 0.01 30);
+  --sidebar-border: oklch(0.9 0.01 30);
+  --sidebar-ring: oklch(0.65 0.18 35 / 0.3);
+
+  /* Glassmorphism specific tokens */
+  --glass-bg: oklch(0.98 0.01 30 / 0.6);
+  --glass-border: oklch(0.9 0.01 30 / 0.3);
+  --glass-highlight: oklch(0.99 0 0 / 0.1);
+
+  --radius: 1rem;
+}
+
+/* Dark theme with orange accents */
 .dark {
-  /* Deep dark backgrounds with subtle gradients */
-  --background: oklch(0.08 0.01 270);
+  /* Deep dark backgrounds with warm undertones */
+  --background: oklch(0.08 0.01 30);
   --foreground: oklch(0.98 0 0);
 
-  /* Glass card with transparency */
-  --card: oklch(0.12 0.015 270 / 0.6);
+  /* Glass card with warm transparency */
+  --card: oklch(0.12 0.015 30 / 0.6);
   --card-foreground: oklch(0.98 0 0);
 
   /* Popover glass effect */
-  --popover: oklch(0.14 0.015 270 / 0.8);
+  --popover: oklch(0.14 0.015 30 / 0.8);
   --popover-foreground: oklch(0.98 0 0);
 
   /* Vibrant blue accent as primary */
-  --primary: oklch(70.09% 0.20117 44.755);
+  --primary: oklch(0.65 0.25 250);
   --primary-foreground: oklch(0.98 0 0);
 
   /* Subtle secondary glass */
-  --secondary: oklch(0.18 0.02 270 / 0.5);
+  --secondary: oklch(0.18 0.02 30 / 0.5);
   --secondary-foreground: oklch(0.98 0 0);
 
   /* Muted glass surfaces */
-  --muted: oklch(0.16 0.015 270 / 0.4);
-  --muted-foreground: oklch(0.65 0.01 270);
+  --muted: oklch(0.16 0.015 30 / 0.4);
+  --muted-foreground: oklch(0.65 0.01 30);
 
-  /* Accent with purple tint */
-  --accent: oklch(0.55 0.2 280);
+  /* Accent with orange-red tint */
+  --accent: oklch(0.6 0.15 25);
   --accent-foreground: oklch(0.98 0 0);
 
-  /* Destructive red */
-  --destructive: oklch(0.55 0.22 25);
+  /* Destructive red-orange */
+  --destructive: oklch(0.55 0.22 20);
   --destructive-foreground: oklch(0.98 0 0);
 
   /* Subtle borders with transparency */
-  --border: oklch(0.25 0.02 270 / 0.3);
-  --input: oklch(0.16 0.015 270 / 0.5);
-  --ring: oklch(0.65 0.25 250 / 0.5);
+  --border: oklch(0.25 0.02 30 / 0.3);
+  --input: oklch(0.16 0.015 30 / 0.5);
+  --ring: oklch(0.7 0.2 35 / 0.5);
 
-  /* Chart colors with vibrant hues */
-  --chart-1: oklch(0.6 0.25 250);
-  --chart-2: oklch(0.65 0.2 160);
-  --chart-3: oklch(0.7 0.22 80);
-  --chart-4: oklch(0.62 0.24 300);
-  --chart-5: oklch(0.68 0.2 30);
+  /* Chart colors with warm palette */
+  --chart-1: oklch(0.7 0.2 35);
+  --chart-2: oklch(0.65 0.18 25);
+  --chart-3: oklch(0.75 0.22 45);
+  --chart-4: oklch(0.6 0.15 15);
+  --chart-5: oklch(0.8 0.18 50);
 
   /* Sidebar glass effect */
-  --sidebar: oklch(0.1 0.015 270 / 0.7);
+  --sidebar: oklch(0.1 0.015 30 / 0.7);
   --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-primary: oklch(0.65 0.25 250);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.18 0.02 270 / 0.6);
+  --sidebar-primary: oklch(0.7 0.2 35);
+  --sidebar-primary-foreground: oklch(0.08 0 0);
+  --sidebar-accent: oklch(0.18 0.02 30 / 0.6);
   --sidebar-accent-foreground: oklch(0.98 0 0);
-  --sidebar-border: oklch(0.25 0.02 270 / 0.2);
-  --sidebar-ring: oklch(0.65 0.25 250 / 0.5);
+  --sidebar-border: oklch(0.25 0.02 30 / 0.2);
+  --sidebar-ring: oklch(0.7 0.2 35 / 0.5);
 
   /* Glassmorphism specific tokens */
-  --glass-bg: oklch(0.15 0.015 270 / 0.4);
-  --glass-border: oklch(0.3 0.02 270 / 0.2);
+  --glass-bg: oklch(0.15 0.015 30 / 0.4);
+  --glass-border: oklch(0.3 0.02 30 / 0.2);
   --glass-highlight: oklch(0.95 0 0 / 0.1);
 
   --radius: 1rem;
@@ -122,6 +186,15 @@
       oklch(0.08 0.01 270)
     );
     background-attachment: fixed;
+    transition: background 0.3s ease;
+  }
+
+  .light body {
+    background: radial-gradient(
+      ellipse at top,
+      oklch(0.15 0.02 30),
+      oklch(0.99 0.005 30)
+    );
   }
 
   /* Glassmorphism utility classes - removed problematic @apply with arbitrary values */
@@ -164,6 +237,59 @@
 
   .glass-button:hover {
     background: oklch(0.95 0 0 / 0.15);
+  }
+
+  /* Enhanced animations and micro-interactions */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .animate-bounce-slow {
+    animation: bounce 2s infinite;
+  }
+
+  .hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, oklch(0.7 0.2 35), oklch(0.6 0.15 25));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes glow {
+    from {
+      box-shadow: 0 0 20px rgba(255, 165, 0, 0.3);
+    }
+    to {
+      box-shadow: 0 0 30px rgba(255, 165, 0, 0.6);
+    }
   }
 }
 
